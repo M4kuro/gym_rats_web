@@ -38,7 +38,7 @@ const handleLogin = async (e) => {
   }
   };
 
-  // Google login
+  // Google login -----> Saturday  03/22 prabh implemented in class
   const handleGoogleLogin = async () => {
     setError("");
     const provider = new GoogleAuthProvider();
