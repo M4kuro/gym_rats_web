@@ -31,7 +31,7 @@ const handleLogin = async (e) => {
     setLoading(true);
     await signInWithEmailAndPassword(auth, input, password);
     setLoading(false);
-    navigate("/HomePage"); // Change this to home page (SAM)
+    navigate("/home"); // Change this to home page (SAM)
   } catch (error) {
     setLoading(false);
     setError(error.message);
@@ -46,7 +46,7 @@ const handleLogin = async (e) => {
       setLoading(true);
       await signInWithPopup(auth, provider);
       setLoading(false);
-      navigate("/HomePage"); // Change this to home page (SAM)
+      navigate("/home"); // Change this to home page (SAM)
     } catch (error) {
       setLoading(false);
       setError(error.message);
