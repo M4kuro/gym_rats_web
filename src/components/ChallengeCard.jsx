@@ -15,6 +15,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
+import { joinChallenge } from "../firebaseConfig"; // Buttons to be added for this 
 
 const calculateDaysLeft = (endDate) => {
   if (!endDate?.toDate) return "Unknown";
@@ -62,6 +63,14 @@ const ChallengeCard = ({ challenge }) => {
     console.log("Delete challenge:", challenge.id);
     // another place holder for now
   };
+
+  /*
+  TO BE IMPLEMENTED! ----> NEED BUTTONS FIRST
+
+  const handleJoinChallenge = () => {
+  };
+  
+  */
 
   return (
     <Card sx={{ maxWidth: 345, height: "100%", display: "flex", flexDirection: "column" }}>

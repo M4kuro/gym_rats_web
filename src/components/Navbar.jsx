@@ -12,6 +12,7 @@ import {
   Box,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import Avatar from '@mui/material/Avatar';
 import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import CreateChallengeDialog from "./CreateChallengeDialog";
@@ -59,12 +60,12 @@ const Navbar = () => {
   return (
     <>
       <AppBar position="fixed">
-        <Toolbar>
+        <Toolbar color="red">
           <IconButton edge="start" color="inherit" onClick={toggleDrawer(true)} sx={{ mr: 2 }}>
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Gym Challenge App 💪
+            Gym rats logo in the 
           </Typography>
         </Toolbar>
       </AppBar>
