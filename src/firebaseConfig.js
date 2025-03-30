@@ -24,9 +24,11 @@ export const saveUserToFirestore = async (user) => {
       name: user.displayName || user.email.split("@")[0],
       email: user.email,
       createdAt: new Date(),
+      challengesJoined: [],
     });
   }
 };
+
 // Challenges and user relation logic = Team assignment and storage management
 export const joinChallenge = async (challengeId, userId, teamColor) => {
   try {
@@ -40,16 +42,35 @@ export const joinChallenge = async (challengeId, userId, teamColor) => {
     const teamsRef = collection(challengeRef, "teams");
     const teamRef = doc(teamsRef, teamColor);
 
+    if (!teamDoc.exists()) {
+      // If team document doesn't exist, create it with an empty members array
+      await setDoc(teamRef, { members: [] });
+    }
+
+   // Check if the user is already in any team
+    const redTeamRef = doc(teamsRef, "red");
+    const blueTeamRef = doc(teamsRef, "blue");
+
+    const [redTeamDoc, blueTeamDoc] = await Promise.all([
+      getDoc(redTeamRef),
+      getDoc(blueTeamRef),
+    ]);
+
+    if (
+      (redTeamDoc.exists() && redTeamDoc.data().members?.includes(userId)) ||
+      (blueTeamDoc.exists() && blueTeamDoc.data().members?.includes(userId))
+    ) {
+      alert("You have already joined a team in this challenge!");
+      return;
+    }
+        
     await updateDoc(teamRef, {
-      members: arrayUnion(userId),
+       challengesJoined: arrayUnion({ challengeId, team: teamColor }),
     });
   } catch (error) {
     console.error("Error joining challenge:", error);
   }
 };
-
-
-
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

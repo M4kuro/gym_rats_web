@@ -3,6 +3,8 @@ import {
   Card,
   CardContent,
   CardMedia,
+  Button,
+  CardActions,
   Typography,
   Box,
   Chip,
@@ -64,13 +66,18 @@ const ChallengeCard = ({ challenge }) => {
     // another place holder for now
   };
 
-  /*
-  TO BE IMPLEMENTED! ----> NEED BUTTONS FIRST
 
-  const handleJoinChallenge = () => {
-  };
+  const handleJoinChallenge = async (teamColor) => {
+  try {
+    await joinChallenge(challenge.id, currentUser.uid, teamColor);
+    alert(`You have joined Team ${teamColor.toUpperCase()}!`);
+  } catch (error) {
+    console.error("Failed to join team:", error);
+  }
+};
   
-  */
+  const userHasJoined = challenge.teams?.red?.includes(currentUser?.uid) ||
+                      challenge.teams?.blue?.includes(currentUser?.uid)
 
   return (
     <Card sx={{ maxWidth: 345, height: "100%", display: "flex", flexDirection: "column" }}>
@@ -131,6 +138,20 @@ const ChallengeCard = ({ challenge }) => {
           </Box>
         )}
       </CardContent>
+      <CardActions sx={{ justifyContent: 'center', padding: '16px' }}>
+        <Button variant="contained"
+          sx={{ background: '#e53935', '&:hover': { backgroundColor: '#b71c1c', }, }}
+          disabled={userHasJoined}
+          onClick={() => handleJoinChallenge('red')}>
+          Join Red Team 
+        </Button>
+        <Button variant="contained"
+          sx={{ background: '#1e88e5', '&:hover': { backgroundColor: '#0d47a1', }, }}
+          disabled={userHasJoined}
+          onClick={() => handleJoinChallenge('blue')}>
+          Join Blue Team 
+        </Button>
+       </CardActions>
     </Card>
   );
 };

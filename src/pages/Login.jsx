@@ -31,7 +31,7 @@ const handleLogin = async (e) => {
     setLoading(true);
     await signInWithEmailAndPassword(auth, input, password);
     setLoading(false);
-    navigate("/home"); // Change this to home page (SAM)
+    navigate("/home"); 
   } catch (error) {
     setLoading(false);
     setError(error.message);
