@@ -11,6 +11,7 @@ import {
 import { collection, addDoc, Timestamp } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import { getAuth } from "firebase/auth";
+import { joinChallenge } from "../firebaseConfig";
 
 
 //
@@ -24,6 +25,7 @@ const CreateChallengeDialog = ({ open, onClose, onChallengeCreated }) => {
   const [type, setType] = useState("");
   const [banner, setBanner] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [selectedTeam, setSelectedTeam] = useState("red"); // Default is red (For the creator select their team need dropdown or radio button)
 
 
   const handleSubmit = async () => {
@@ -31,6 +33,7 @@ const CreateChallengeDialog = ({ open, onClose, onChallengeCreated }) => {
 
       const auth = getAuth();
       const user = auth.currentUser;
+
       const newChallenge = {
         title,
         description,
@@ -42,7 +45,12 @@ const CreateChallengeDialog = ({ open, onClose, onChallengeCreated }) => {
         creatorName: user?.displayName || user?.email.split("@")[0] || "Unknown",
       };
 
-      await addDoc(collection(db, "challenges"), newChallenge);
+      // (Checkpoint to return just in case) originally --> await addDoc(collection(db, "challenges"), newChallenge);
+      // For the challenge creator to select their own team the challenge reference need to be provided to be stored in the user collection
+      const challengeRef = await addDoc(collection(db, "challenges"), newChallenge);
+      
+      await joinChallenge(challengeRef.id, user.uid, selectedTeam);
+
       if (onChallengeCreated) onChallengeCreated(newChallenge);
 
       // clear everything and close

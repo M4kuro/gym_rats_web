@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { saveUserToFirestore } from "../firebaseConfig";
 
 
 function Signup() {
@@ -36,9 +37,11 @@ function Signup() {
 
     try {
       setLoading(true);
-      const user = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
       //Alert user account created successfully
       if (user) {
+        await saveUserToFirestore(user)
         alert("User created successfully!");
       }
       setLoading(false);
@@ -53,7 +56,7 @@ function Signup() {
 
   // Bones + Style
     return (
-        <section className="">
+<section>
   <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
       <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-white-900 dark:text-white">
         <img className="mx-auto h-60 w-auto" src="/logo.png" alt="logo"/>   
