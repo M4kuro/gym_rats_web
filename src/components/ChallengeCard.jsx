@@ -70,7 +70,7 @@ const ChallengeCard = ({ challenge }) => {
   const handleJoinChallenge = async (teamColor) => {
   try {
     await joinChallenge(challenge.id, currentUser.uid, teamColor);
-    alert(`You have joined Team ${teamColor.toUpperCase()}!`);
+    //alert(`You have joined Team ${teamColor.toUpperCase()}!`);
   } catch (error) {
     console.error("Failed to join team:", error);
   }
