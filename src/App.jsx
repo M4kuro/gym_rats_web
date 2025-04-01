@@ -4,6 +4,7 @@ import Login from './pages/Login' // Don't mind this error, app is working
 import Signup from './pages/Signup' 
 import HomePage from './pages/HomePage'
 import Navbar from "./components/Navbar.jsx";
+import Settings from "./pages/Settings.jsx";
 import './App.css'
 
 // adding a function to use for routes (where it hides navbar from certain pages..
@@ -21,6 +22,7 @@ function AppRoutes() {
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/home" element={<HomePage />} />
+        <Route path="/settings" element={<Settings />} />
         {/* here is where you'd add more routes as needed */}
       </Routes>
     </>

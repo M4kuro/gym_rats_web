@@ -16,7 +16,7 @@ import Avatar from '@mui/material/Avatar';
 import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import CreateChallengeDialog from "./CreateChallengeDialog";
-import { red } from '@mui/material/colors';
+
 
 const Navbar = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -25,7 +25,7 @@ const Navbar = () => {
 
   const navigate = useNavigate();
   const auth = getAuth();
-  const color = red[500];
+  
 
   // useeffect for auth changes
   // using mostly the code that was provided via the class on last monday and saturday.
@@ -52,6 +52,7 @@ const Navbar = () => {
         { text: "Home", path: "/home" },
         { text: "Create Challenge", action: () => setDialogOpen(true) },
         { text: "Profile", path: "/profile" },
+        { text: "Settings", path: "/settings" },
         { text: "Logout", action: handleLogout },
       ]
     : [
@@ -106,6 +107,25 @@ const Navbar = () => {
                       sx={{ textAlign: 'center' }} // Center text within ListItemText
                     />
                   </ListItemButton>
+                  {/* Render Settings as a Submenu under Profile */}
+                  {link.subMenu && (
+                    <Box sx={{ pl: 4 }}>
+                      {link.subMenu.map((subLink, subIndex) => (
+                        <ListItemButton
+                          key={subIndex}
+                          sx={{
+                            justifyContent: 'center',
+                            '&:hover': {
+                              backgroundColor: '#ff7961',
+                            },
+                          }}
+                          onClick={() => navigate(subLink.path)}
+                        >
+                          <ListItemText primary={subLink.text} sx={{ textAlign: 'center' }} />
+                        </ListItemButton>
+                      ))}
+                    </Box>
+                  )}
                 </ListItem>
               ))}
             </List>
