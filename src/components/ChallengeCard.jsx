@@ -17,7 +17,6 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
-import { joinChallenge } from "../firebaseConfig"; // Buttons to be added for this 
 
 const calculateDaysLeft = (endDate) => {
   if (!endDate?.toDate) return "Unknown";
@@ -28,22 +27,16 @@ const calculateDaysLeft = (endDate) => {
   return diffDays > 0 ? `${diffDays} day(s) left` : "Ended";
 };
 
-
-//-------------------------------------------
-// taking most of the code from prabhs example here to use in our system (Daysleft may change later depending if we decide on
-// a 30 day limit for each challenge or not just depends on what we want to calculate i guess)
-//-------------------------------------------
-
 const ChallengeCard = ({ challenge }) => {
   const {
     title,
     description,
     type,
     bannerImage,
-    createdAt,
     endDate,
     creatorId,
     creatorName,
+    id,
   } = challenge;
 
   const auth = getAuth();
@@ -56,28 +49,17 @@ const ChallengeCard = ({ challenge }) => {
     navigate(`/profile/${creatorId}`);
   };
 
+  const handleViewChallenge = () => {
+    navigate(`/challenge/${id}`);
+  };
+
   const handleEdit = () => {
-    console.log("Edit challenge:", challenge.id);
-    // this is just a place holder for now 
+    console.log("Edit challenge:", id);
   };
 
   const handleDelete = () => {
-    console.log("Delete challenge:", challenge.id);
-    // another place holder for now
+    console.log("Delete challenge:", id);
   };
-
-
-  const handleJoinChallenge = async (teamColor) => {
-  try {
-    await joinChallenge(challenge.id, currentUser.uid, teamColor);
-    alert(`You have joined Team ${teamColor.toUpperCase()}!`);
-  } catch (error) {
-    console.error("Failed to join team:", error);
-  }
-};
-  
-  const userHasJoined = challenge.teams?.red?.includes(currentUser?.uid) ||
-                      challenge.teams?.blue?.includes(currentUser?.uid)
 
   return (
     <Card sx={{ maxWidth: 345, height: "100%", display: "flex", flexDirection: "column" }}>
@@ -138,20 +120,16 @@ const ChallengeCard = ({ challenge }) => {
           </Box>
         )}
       </CardContent>
+
       <CardActions sx={{ justifyContent: 'center', padding: '16px' }}>
-        <Button variant="contained"
-          sx={{ background: '#e53935', '&:hover': { backgroundColor: '#b71c1c', }, }}
-          disabled={userHasJoined}
-          onClick={() => handleJoinChallenge('red')}>
-          Join Red Team 
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleViewChallenge}
+        >
+          View Challenge
         </Button>
-        <Button variant="contained"
-          sx={{ background: '#1e88e5', '&:hover': { backgroundColor: '#0d47a1', }, }}
-          disabled={userHasJoined}
-          onClick={() => handleJoinChallenge('blue')}>
-          Join Blue Team 
-        </Button>
-       </CardActions>
+      </CardActions>
     </Card>
   );
 };

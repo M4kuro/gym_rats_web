@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-import { doc, setDoc, getDoc } from "firebase/firestore"; 
+import { doc, setDoc, getDoc, updateDoc, collection, arrayUnion } from "firebase/firestore"; 
 
 const firebaseConfig = {
   apiKey: "AIzaSyBxXRDpESpQABwj3xVtVqgbvlvIo8bHlkk",
@@ -33,42 +33,40 @@ export const saveUserToFirestore = async (user) => {
 export const joinChallenge = async (challengeId, userId, teamColor) => {
   try {
     const challengeRef = doc(db, "challenges", challengeId);
-    const challengeDoc = await getDoc(challengeRef);
-
-    if (!challengeDoc.exists()) {
-      throw new Error("Challenge not found");
-    }
-
     const teamsRef = collection(challengeRef, "teams");
-    const teamRef = doc(teamsRef, teamColor);
 
-    if (!teamDoc.exists()) {
-      // If team document doesn't exist, create it with an empty members array
-      await setDoc(teamRef, { members: [] });
-    }
-
-   // Check if the user is already in any team
     const redTeamRef = doc(teamsRef, "red");
     const blueTeamRef = doc(teamsRef, "blue");
 
-    const [redTeamDoc, blueTeamDoc] = await Promise.all([
+    const [redDoc, blueDoc] = await Promise.all([
       getDoc(redTeamRef),
       getDoc(blueTeamRef),
     ]);
 
-    if (
-      (redTeamDoc.exists() && redTeamDoc.data().members?.includes(userId)) ||
-      (blueTeamDoc.exists() && blueTeamDoc.data().members?.includes(userId))
-    ) {
+    const alreadyInRed = redDoc.exists() && redDoc.data()?.members?.includes(userId);
+    const alreadyInBlue = blueDoc.exists() && blueDoc.data()?.members?.includes(userId);
+
+    if (alreadyInRed || alreadyInBlue) {
       alert("You have already joined a team in this challenge!");
       return;
     }
-        
-    await updateDoc(teamRef, {
-       challengesJoined: arrayUnion({ challengeId, team: teamColor }),
-    });
+
+    const teamRef = doc(teamsRef, teamColor);
+    const teamDoc = await getDoc(teamRef);
+
+    if (!teamDoc.exists()) {
+      console.log(`[joinChallenge] Creating ${teamColor} team and adding user ${userId}`);
+      await setDoc(teamRef, { members: [userId] });
+    } else {
+      console.log(`[joinChallenge] Adding user ${userId} to existing ${teamColor} team`);
+      await updateDoc(teamRef, {
+        members: arrayUnion(userId),
+      });
+    }
+
+    alert(`You joined Team ${teamColor.toUpperCase()}!`);
   } catch (error) {
-    console.error("Error joining challenge:", error);
+    console.error("🔥 Error joining challenge:", error);
   }
 };
 
