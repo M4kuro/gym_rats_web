@@ -49,14 +49,19 @@ const Navbar = () => {
 
   const navLinks = isLoggedIn
     ? [
-        { text: "Home", path: "/home" },
-        { text: "Create Challenge", action: () => setDialogOpen(true) },
-        { text: "Profile", path: "/profile" },
-        { text: "Logout", action: handleLogout },
-      ]
+      { text: "Home", path: "/home" },
+      { text: "Create Challenge", action: () => setDialogOpen(true) },
+      {
+        text: "Profile",
+        path: "/profile",
+       // subMenu: [{ text: "Settings", path: "/profile/settings" }] // Added Settings under Profile
+      },
+      { text: "Settings", path: "/settings" },
+      { text: "Logout", action: handleLogout },
+    ]
     : [
-        { text: "Login", path: "/" },
-        { text: "Signup", path: "/signup" },
+      { text: "Login", path: "/" },
+      { text: "Signup", path: "/signup" },
       ];
 
   return (
@@ -106,10 +111,29 @@ const Navbar = () => {
                       sx={{ textAlign: 'center' }} // Center text within ListItemText
                     />
                   </ListItemButton>
+                  {/* Render Settings as a Submenu under Profile */}
+                  {link.subMenu && (
+                    <Box sx={{ pl: 4 }}>
+                      {link.subMenu.map((subLink, subIndex) => (
+                        <ListItemButton
+                          key={subIndex}
+                          sx={{
+                            justifyContent: 'center',
+                            '&:hover': {
+                              backgroundColor: '#ff7961',
+                            },
+                          }}
+                          onClick={() => navigate(subLink.path)}
+                        >
+                          <ListItemText primary={subLink.text} sx={{ textAlign: 'center' }} />
+                        </ListItemButton>
+                      ))}
+                    </Box>
+                  )}
                 </ListItem>
               ))}
-            </List>
-          </Box>
+          </List>
+        </Box>
       </Drawer>
 
        {/*challenge Dialog should go here i think? */}
