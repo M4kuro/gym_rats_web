@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import Login from './pages/Login' // Don't mind this error, app is working
 import Signup from './pages/Signup' 
 import HomePage from './pages/HomePage'
+import Profile from './pages/Profile';
+
 import Navbar from "./components/Navbar.jsx";
 import './App.css'
 
@@ -21,6 +23,8 @@ function AppRoutes() {
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/home" element={<HomePage />} />
+        <Route path="/profile" element={<Profile />} />
+
         {/* here is where you'd add more routes as needed */}
       </Routes>
     </>
