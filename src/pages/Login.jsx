@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth } from '../firebaseConfig';
+import { saveUserToFirestore } from '../firebaseConfig';
 import { signInWithEmailAndPassword, GoogleAuthProvider } from 'firebase/auth';
 
 
@@ -29,7 +30,9 @@ const handleLogin = async (e) => {
 
     try {
     setLoading(true);
-    await signInWithEmailAndPassword(auth, input, password);
+    const userCredential = await signInWithEmailAndPassword(auth, input, password);
+    const user = userCredential.user;
+    await saveUserToFirestore(user);
     setLoading(false);
     navigate("/home"); 
   } catch (error) {

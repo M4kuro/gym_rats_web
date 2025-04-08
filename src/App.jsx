@@ -5,6 +5,7 @@ import Signup from './pages/Signup'
 import HomePage from './pages/HomePage'
 import Navbar from "./components/Navbar.jsx";
 import './App.css'
+import ChallengeDetails from './pages/ChallengeDetails.jsx'
 
 // adding a function to use for routes (where it hides navbar from certain pages..
 // can add more pages later if needed.. )
@@ -21,6 +22,7 @@ function AppRoutes() {
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/home" element={<HomePage />} />
+        <Route path="/challenge/:id" element={<ChallengeDetails />} />
         {/* here is where you'd add more routes as needed */}
       </Routes>
     </>
