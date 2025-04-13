@@ -181,13 +181,43 @@ const Settings = () => {
 
                     <Divider sx={{ my: 3 }} />
 
-                    {/* Support & About */}
                     <Typography variant="h6">Support & About</Typography>
-                    <Button variant="contained" fullWidth sx={{ mt: 2 }}>Help Center</Button>
-                    <Button variant="contained" fullWidth sx={{ mt: 2 }}>FAQs</Button>
-                    <Button variant="contained" fullWidth sx={{ mt: 2 }}>Report a Bug</Button>
-                    <Button variant="contained" fullWidth sx={{ mt: 2 }}>Contact Support</Button>
 
+                    <Button
+                        variant="contained"
+                        fullWidth
+                        sx={{ mt: 2 }}
+                        onClick={() => window.open("https://help.gymrats.app/en/", "_blank")}
+                    >
+                        Help Center
+                    </Button>
+
+                    <Button
+                        variant="contained"
+                        fullWidth
+                        sx={{ mt: 2 }}
+                        onClick={() => window.open("https://help.gymrats.app/en/collections/11651046-troubleshooting-faq", "_blank")}
+                    >
+                        FAQs
+                    </Button>
+
+                    <Button
+                        variant="contained"
+                        fullWidth
+                        sx={{ mt: 2 }}
+                        onClick={() => window.open("https://www.gymrats.app/news", "_blank")}
+                    >
+                        Report a Bug
+                    </Button>
+
+                    <Button
+                        variant="contained"
+                        fullWidth
+                        sx={{ mt: 2 }}
+                        onClick={() => window.open("https://www.gymrats.app/contact", "_blank")}
+                    >
+                        Contact Support
+                    </Button>
                 </Container>
             </Box>
         </ThemeProvider>
