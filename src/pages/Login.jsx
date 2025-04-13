@@ -4,6 +4,10 @@ import { auth } from '../firebaseConfig';
 import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { saveUserToFirestore } from '../firebaseConfig';
+
+
+
 
 function Login() {
   const [input, setInput] = useState(""); // Can be email or username
