@@ -78,7 +78,7 @@ function Signup() {
                                     onChange={(e) => setEmail(e.target.value)}
                                     value={email}
                                     required />
-                  </div>
+                  </div>  
                   <div>
                       <label for="password" className="block mb-2 text-sm font-medium text-red-600">Password</label>
                   <input type="password" name="password" id="password" placeholder=""

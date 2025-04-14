@@ -16,7 +16,8 @@ import Avatar from '@mui/material/Avatar';
 import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import CreateChallengeDialog from "./CreateChallengeDialog";
-import { red } from '@mui/material/colors';
+import useUserProfile from "../hooks/useUserProfile"; 
+
 
 const Navbar = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -25,7 +26,9 @@ const Navbar = () => {
 
   const navigate = useNavigate();
   const auth = getAuth();
-  const color = red[500];
+  const profile = useUserProfile();
+  const profilePic = profile?.profilePic;
+
 
   // useeffect for auth changes
   // using mostly the code that was provided via the class on last monday and saturday.
@@ -62,7 +65,9 @@ const Navbar = () => {
     : [
       { text: "Login", path: "/" },
       { text: "Signup", path: "/signup" },
-      ];
+    ];
+  
+    
 
   return (
     <>
@@ -71,14 +76,20 @@ const Navbar = () => {
           <IconButton edge="start" color="black" onClick={toggleDrawer(true)} sx={{ mr: 2 }}>
             <MenuIcon />
           </IconButton>
+
           {/* logo centrilized */}
           <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
              <Avatar src="/homeL.png" sx={{ width: 52, height: 52, background:'#e53935'}}>L</Avatar>
           </Box>
 
           {/* User on the right */}
-          <IconButton>
-            <Avatar src="" sx={{ width: 42, height: 42,}}>L</Avatar>
+          <IconButton onClick={() => navigate("/profile")}>
+            <Avatar
+              src={profilePic}
+              sx={{ width: 42, height: 42, backgroundColor: "#e53935" }}
+            >
+              {!profilePic && "U"}
+            </Avatar>
           </IconButton>
         </Toolbar>
       </AppBar>

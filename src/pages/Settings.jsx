@@ -38,7 +38,7 @@ const Settings = () => {
     });
 
     const [nutrition, setNutrition] = useState({
-        calorieGoal: 2000,
+        calorieGoal: 0,
         diet: "None",
     });
 
@@ -102,49 +102,158 @@ const Settings = () => {
 
     return (
         <ThemeProvider theme={darkTheme}>
-            <Box sx={{ height: "100vh", display: "flex", flexDirection: "column", overflowY: "auto", pb: 5, color: darkTheme.palette.text.primary }}>
+            <Box sx={{ minHeight: "100vh", display: "flex", flexDirection: "column", pb: 5, color: darkTheme.palette.text.primary }}>
                 <Container maxWidth="sm" sx={{ mt: 4 }}>
-                    <Typography variant="h4" align="center">Settings</Typography>
+                    <Typography className="text-2xl font-bold text-red-500" variant="h4" align="center">Settings</Typography>
 
                     {/* Profile Settings */}
-                    <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
-                        <Avatar src={profile.profilePic} sx={{ width: 80, height: 80 }} />
+                    <Box sx={{ display: "flex", justifyContent: "center", m: 3 }}>
+                        <Avatar src={profile.profilePic} sx={{ width: 100, height: 100 }} />
                     </Box>
 
-                    <Typography variant="h6">Profile Settings</Typography>
-                    <TextField fullWidth label="Full Name" value={profile.name} disabled={!isEditing} onChange={(e) => setProfile({ ...profile, name: e.target.value })} margin="normal" InputLabelProps={{ style: { color: darkTheme.palette.text.primary } }} />
-                    <TextField fullWidth label="Email" value={profile.email} disabled margin="normal" InputLabelProps={{ style: { color: darkTheme.palette.text.primary } }} />
-                    <TextField fullWidth label="Age" type="number" value={profile.age} disabled={!isEditing} onChange={(e) => setProfile({ ...profile, age: e.target.value })} margin="normal" InputLabelProps={{ style: { color: darkTheme.palette.text.primary } }} />
-                    <TextField fullWidth label="Weight" type="number" value={profile.weight} disabled={!isEditing} onChange={(e) => setProfile({ ...profile, weight: e.target.value })} margin="normal" InputLabelProps={{ style: { color: darkTheme.palette.text.primary } }} />
+                    <Typography className="mb-4 text-2xl font-bold text-red-500" variant="h6">Profile Settings</Typography>
+                    <TextField fullWidth label="Full Name" value={profile.name} disabled={!isEditing} onChange={(e) => setProfile({ ...profile, name: e.target.value })} margin="normal"
+                        sx={{ '& .MuiOutlinedInput-notchedOutline': { borderColor: 'red' },
+                            '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: 'darkred' },
+                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: 'red' },
+                            '& .MuiInputLabel-root': { color: 'red' },
+                             // Target the input itself when focused
+                            '& .MuiOutlinedInput-root.Mui-focused': { color: darkTheme.palette.text.primary },
+                            // Override the default focus color
+                            '& .MuiInputBase-root.Mui-focused': { color: darkTheme.palette.text.primary },
+                            // Remove blue ripple effect
+                            '& .MuiTouchRipple-root': { color: 'red' },
+                            color: darkTheme.palette.text.primary,  
+                    
+                }}
+                InputLabelProps={{ style: { color: 'red' }, sx: { '&.Mui-focused': { color: 'red' }} }} />
+                    
+                    <TextField fullWidth label="Email" value={profile.email} disabled margin="normal" sx={{
+                    '& .MuiOutlinedInput-notchedOutline': {
+                        borderColor: 'red',
+                    },
+                    '&:hover .MuiOutlinedInput-notchedOutline': {
+                        borderColor: 'darkred',
+                    },
+                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                        borderColor: 'red',
+                    },
+                    '& .MuiInputLabel-root': {
+                        color: 'red',  
+                    },
+                    color: darkTheme.palette.text.primary,
+                }}
+                InputLabelProps={{ style: { color: 'red' } }} />
+
+                    <TextField fullWidth label="Age" type="number" value={profile.age} disabled={!isEditing} onChange={(e) => setProfile({ ...profile, age: e.target.value })} margin="normal" sx={{
+                    '& .MuiOutlinedInput-notchedOutline': {
+                        borderColor: 'red',
+                    },
+                    '&:hover .MuiOutlinedInput-notchedOutline': {
+                        borderColor: 'darkred',
+                    },
+                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                        borderColor: 'red',
+                    },
+                    '& .MuiInputLabel-root': {
+                        color: 'red',  
+                    },
+                    color: darkTheme.palette.text.primary,
+                }}
+                InputLabelProps={{ style: { color: 'red' } }} />
+                    
+                    <TextField fullWidth label="Weight" type="number" value={profile.weight} disabled={!isEditing} onChange={(e) => setProfile({ ...profile, weight: e.target.value })} margin="normal" sx={{
+                    '& .MuiOutlinedInput-notchedOutline': {
+                        borderColor: 'red',
+                    },
+                    '&:hover .MuiOutlinedInput-notchedOutline': {
+                        borderColor: 'darkred',
+                    },
+                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                        borderColor: 'red',
+                    },
+                    '& .MuiInputLabel-root': {
+                        color: 'red',  
+                    },
+                    color: darkTheme.palette.text.primary,
+                }}
+                InputLabelProps={{ style: { color: 'red' } }} />
 
                     {!isEditing ? (
-                        <Button variant="contained" fullWidth onClick={() => setIsEditing(true)} sx={{ mt: 2 }}>Edit Profile</Button>
+                        <Button  variant="contained" fullWidth onClick={() => setIsEditing(true)} sx={{ mt: 2,
+                            backgroundColor: "#dc2626",
+                            "&:hover": { backgroundColor: "#b91c1c"} }}>Edit Profile</Button>
                     ) : (
-                        <Button variant="contained" fullWidth onClick={handleSave} sx={{ mt: 2 }}>Save Changes</Button>
+                        <Button variant="contained" fullWidth onClick={handleSave} sx={{ mt: 2,
+                            backgroundColor: "#dc2626",
+                            "&:hover": { backgroundColor: "#b91c1c"} }}>Save Changes</Button>
                     )}
 
                     <Divider sx={{ my: 3 }} />
 
                     {/* Workout Preferences */}
-                    <Typography variant="h6">Workout Preferences</Typography>
+                    <Typography className="mb-4 text-2xl font-bold text-red-500" variant="h6">Workout Preferences</Typography>
                     <FormControl fullWidth margin="normal">
-                        <InputLabel>Default Workout Plan</InputLabel>
-                        <Select value={workout.workoutPlan} onChange={(e) => setWorkout({ ...workout, workoutPlan: e.target.value })}>
+                        <InputLabel sx={{ color: 'red' }}></InputLabel>
+                        <Select sx={{
+                                    '& .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: 'red',
+                                    },
+                                    '&:hover .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: 'darkred',
+                                    },
+                                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: 'red',
+                                    },
+                                    color: 'black',
+                                }}
+                            value={workout.workoutPlan} onChange={(e) => setWorkout({ ...workout, workoutPlan: e.target.value })}>
                             <MenuItem value="Strength">Strength</MenuItem>
                             <MenuItem value="Cardio">Cardio</MenuItem>
                             <MenuItem value="Hybrid">Hybrid</MenuItem>
                         </Select>
                     </FormControl>
-                    <FormControlLabel control={<Switch checked={workout.trackRecords} onChange={(e) => setWorkout({ ...workout, trackRecords: e.target.checked })} />} label="Enable Personal Records Tracking" />
+                    <FormControlLabel control={<Switch checked={workout.trackRecords} onChange={(e) => setWorkout({ ...workout, trackRecords: e.target.checked })} color="error" />} className="mb-4 text-2xl font-bold text-red-500" label="Enable Personal Records Tracking" />
 
                     <Divider sx={{ my: 3 }} />
 
                     {/* Nutrition Settings */}
-                    <Typography variant="h6">Nutrition Settings</Typography>
-                    <TextField fullWidth label="Calorie Goal" type="number" value={nutrition.calorieGoal} onChange={(e) => setNutrition({ ...nutrition, calorieGoal: e.target.value })} margin="normal" />
+                    <Typography className="mb-4 text-2xl font-bold text-red-500" variant="h6">Nutrition Settings</Typography>
+                    <TextField sx={{
+                                    '& .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: 'red',
+                                    },
+                                    '&:hover .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: 'darkred',
+                                    },
+                                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: 'red',
+                                    },
+                                    '& .MuiInputLabel-root': {
+                                        color: 'red',  
+                                    },
+                                    color: darkTheme.palette.text.primary,
+                                }}
+                        fullWidth label="Calorie Goal" type="number" value={nutrition.calorieGoal} onChange={(e) => setNutrition({ ...nutrition, calorieGoal: e.target.value })} margin="normal" InputLabelProps={{ style: { color: 'red' } }} />
+                    
                     <FormControl fullWidth margin="normal">
-                        <InputLabel>Diet Preference</InputLabel>
-                        <Select value={nutrition.diet} onChange={(e) => setNutrition({ ...nutrition, diet: e.target.value })}>
+                        <InputLabel sx={{
+                            color: 'red', 
+                            '&.Mui-focused': { color: 'red' },
+                            textDecoration: 'none'
+                            
+                        }}>
+                            Diet Preference</InputLabel>
+                         <Select 
+                        sx={{
+                            '& .MuiOutlinedInput-notchedOutline': { borderColor: 'red'},
+                            '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: 'darkred' },
+                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: 'red' },
+                            '&.Mui-focused': { color: 'red' },
+                            '& .MuiTouchRipple-root': { color: 'red' },
+                            color: darkTheme.palette.text.primary
+                            
+                    }}  value={nutrition.diet} onChange={(e) => setNutrition({ ...nutrition, diet: e.target.value })}>
                             <MenuItem value="None">None</MenuItem>
                             <MenuItem value="Vegetarian">Vegetarian</MenuItem>
                             <MenuItem value="Vegan">Vegan</MenuItem>
@@ -155,10 +264,25 @@ const Settings = () => {
                     <Divider sx={{ my: 3 }} />
 
                     {/* Subscription Plan */}
-                    <Typography variant="h6">Subscription Plan</Typography>
+                    <Typography className="mb-4 text-2xl font-bold text-red-500" variant="h6">Subscription Plan</Typography>
                     <FormControl fullWidth margin="normal">
-                        <InputLabel>Subscription</InputLabel>
-                        <Select value={subscription} onChange={(e) => setSubscription(e.target.value)}>
+                        <InputLabel sx={{ color: 'red' }}></InputLabel>
+                
+                        <Select
+                                sx={{
+                            '& .MuiOutlinedInput-notchedOutline': {
+                                borderColor: 'red',
+                            },
+                            '&:hover .MuiOutlinedInput-notchedOutline': {
+                                borderColor: 'darkred',
+                            },
+                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                borderColor: 'red',
+                            },
+                            color: darkTheme.palette.text.primary,
+                        }}
+                            
+                            value={subscription} onChange={(e) => setSubscription(e.target.value)}>
                             <MenuItem value="Free">Free</MenuItem>
                             <MenuItem value="Premium">Premium</MenuItem>
                             <MenuItem value="Pro">Pro</MenuItem>
@@ -168,11 +292,24 @@ const Settings = () => {
                     <Divider sx={{ my: 3 }} />
 
                     {/* App Appearance */}
-                    <Typography variant="h6">App Appearance</Typography>
-                    <FormControlLabel control={<Switch checked={appearance.darkMode} onChange={(e) => setAppearance({ ...appearance, darkMode: e.target.checked })} />} label="Enable Dark Mode" />
+                    <FormControlLabel control={<Switch checked={appearance.darkMode} onChange={(e) => setAppearance({ ...appearance, darkMode: e.target.checked })} color="error" />} className="mb-4 text-2xl font-bold text-red-500" label="Enable Dark Mode" />
+                    <Typography className="mb-4 text-2xl font-bold text-red-500" variant="h6">Language</Typography>
                     <FormControl fullWidth margin="normal">
-                        <InputLabel>Language</InputLabel>
-                        <Select value={appearance.language} onChange={(e) => setAppearance({ ...appearance, language: e.target.value })}>
+                        
+                        <Select sx={{
+                        '& .MuiOutlinedInput-notchedOutline': {
+                            borderColor: 'red',
+                        },
+                        '&:hover .MuiOutlinedInput-notchedOutline': {
+                            borderColor: 'darkred',
+                        },
+                        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                            borderColor: 'red',
+                        },
+                        color: darkTheme.palette.text.primary,
+                    }}
+                            
+                            value={appearance.language} onChange={(e) => setAppearance({ ...appearance, language: e.target.value })}>
                             <MenuItem value="English">English</MenuItem>
                             <MenuItem value="Spanish">Spanish</MenuItem>
                             <MenuItem value="French">French</MenuItem>
@@ -181,12 +318,17 @@ const Settings = () => {
 
                     <Divider sx={{ my: 3 }} />
 
-                    <Typography variant="h6">Support & About</Typography>
+                    <Typography className="mb-4 text-2xl font-bold text-red-500" variant="h6">Support & About</Typography>
 
                     <Button
                         variant="contained"
                         fullWidth
-                        sx={{ mt: 2 }}
+                        sx={{
+                            mt: 2,
+                            backgroundColor: "#dc2626",
+                            "&:hover": { backgroundColor: "#b91c1c"}                            
+                            
+                        }}
                         onClick={() => window.open("https://help.gymrats.app/en/", "_blank")}
                     >
                         Help Center
@@ -195,7 +337,9 @@ const Settings = () => {
                     <Button
                         variant="contained"
                         fullWidth
-                        sx={{ mt: 2 }}
+                        sx={{ mt: 2,
+                            backgroundColor: "#dc2626",
+                            "&:hover": { backgroundColor: "#b91c1c"} }}
                         onClick={() => window.open("https://help.gymrats.app/en/collections/11651046-troubleshooting-faq", "_blank")}
                     >
                         FAQs
@@ -204,7 +348,9 @@ const Settings = () => {
                     <Button
                         variant="contained"
                         fullWidth
-                        sx={{ mt: 2 }}
+                        sx={{ mt: 2,
+                            backgroundColor: "#dc2626",
+                            "&:hover": { backgroundColor: "#b91c1c"} }}
                         onClick={() => window.open("https://www.gymrats.app/news", "_blank")}
                     >
                         Report a Bug
@@ -213,7 +359,9 @@ const Settings = () => {
                     <Button
                         variant="contained"
                         fullWidth
-                        sx={{ mt: 2 }}
+                        sx={{ mt: 2,
+                            backgroundColor: "#dc2626",
+                            "&:hover": { backgroundColor: "#b91c1c"} }}
                         onClick={() => window.open("https://www.gymrats.app/contact", "_blank")}
                     >
                         Contact Support
