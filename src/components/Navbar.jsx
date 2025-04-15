@@ -54,13 +54,14 @@ const Navbar = () => {
     ? [
       { text: "Home", path: "/home" },
       { text: "Create Challenge", action: () => setDialogOpen(true) },
-      {
-        text: "Profile",
-        path: "/profile",
+      
+      { text: "Profile", path: "/profile" },
+        
        // subMenu: [{ text: "Settings", path: "/profile/settings" }] // Added Settings under Profile
-      },
+      
       { text: "Settings", path: "/settings" },
       { text: "Logout", action: handleLogout },
+      
     ]
     : [
       { text: "Login", path: "/" },
